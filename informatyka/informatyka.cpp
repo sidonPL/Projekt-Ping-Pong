@@ -2,7 +2,8 @@
 #include<SFML/Graphics.hpp>
 #include<SFML/Window.hpp>
 #include "kulka.h"
-#include "paletki.h"
+#include "paletka1.h"
+#include "paletka2.h"
 #include <SFML/Audio.hpp>
 #include <cmath>
 #include <ctime>
@@ -16,25 +17,42 @@ template <class T1, class T2> bool isIntersecting(T1& A, T2& B)
 		&& A.bottom() >= B.top() && A.top() <= B.bottom();
 }
 
-bool collisionTest(paletki& paletki, kulka& kulka)
+bool collisionTest(paletka1& paletka1, kulka& kulka)
 {
-	if (!isIntersecting(paletki, kulka)) return false;
+	if (!isIntersecting(paletka1, kulka)) return false;
 
-	kulka.moveup();
-	if (kulka.getPosition().x < paletki.getPosition().x)
+	kulka.moveright();
+	if (kulka.getPosition().y < paletka1.getPosition().y)
 	{
-		kulka.moveleft();
+		kulka.moveup();
 	}
-	else if (kulka.getPosition().x > paletki.getPosition().x)
+	else if (kulka.getPosition().y > paletka1.getPosition().y)
 	{
-		kulka.moveright();
+		kulka.movedown();
 	}
 }
+
+bool collisionTest(paletka2& paletka2, kulka& kulka)
+{
+	if (!isIntersecting(paletka2, kulka)) return false;
+
+	kulka.moveleft();
+	if (kulka.getPosition().y < paletka2.getPosition().y)
+	{
+		kulka.moveup();
+	}
+	else if (kulka.getPosition().y > paletka2.getPosition().y)
+	{
+		kulka.movedown();
+	}
+}
+
 
 int main()
 {
 	kulka kulka(400, 300);
-	paletki paletki(400, 550);
+	paletka1 paletka1(40, 300);
+	paletka2 paletka2(760, 300);
 	RenderWindow window{ VideoMode{800,600},"Ping Pong" };
 	window.setFramerateLimit(60);
 	Event event;
@@ -58,9 +76,12 @@ int main()
 		}
 		
 		kulka.update();
-		paletki.update();
-		collisionTest(paletki, kulka);
-		window.draw(paletki);
+		paletka1.update();
+		paletka2.update();
+		collisionTest(paletka1, kulka);
+		collisionTest(paletka2, kulka);
+		window.draw(paletka1);
+		window.draw(paletka2);
 		window.draw(kulka);
 		window.display();
 	}

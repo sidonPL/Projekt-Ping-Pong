@@ -1,12 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 using namespace sf;
-class paletki : public Drawable 
+class paletka1 : public Drawable 
 {
 public:
-	paletki(float t_X, float t_Y);
-	paletki() = delete;
-	~paletki() = default;
+	paletka1(float t_X, float t_Y);
+	paletka1() = delete;
+	~paletka1() = default;
 	void update();
 	float left();
 	float right();
