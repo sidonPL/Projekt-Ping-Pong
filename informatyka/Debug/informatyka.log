@@ -1,4 +1,1 @@
-﻿  informatyka.cpp
-  C:\Users\szymc\source\repos\sidonPL\Projekt-Ping-Pong\informatyka\informatyka.cpp(48) : warning C4715: "collisionTest”: niewszystkie ścieżki kodu zwracają wartość
-  C:\Users\szymc\source\repos\sidonPL\Projekt-Ping-Pong\informatyka\informatyka.cpp(33) : warning C4715: "collisionTest”: niewszystkie ścieżki kodu zwracają wartość
-  informatyka.vcxproj -> C:\Users\szymc\Source\Repos\sidonPL\Projekt-Ping-Pong\Debug\informatyka.exe
+﻿  informatyka.vcxproj -> C:\Users\szymc\source\repos\sidonPL\Projekt-Ping-Pong\Debug\informatyka.exe

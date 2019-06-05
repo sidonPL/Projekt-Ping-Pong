@@ -11,6 +11,9 @@
 using namespace std;
 using namespace sf;
 
+int score1 = 0;
+int score2 = 0;
+
 template <class T1, class T2> bool isIntersecting(T1& A, T2& B)
 {
 	return A.right() >= B.left() && A.left() <= B.right()
@@ -46,15 +49,40 @@ bool collisionTest(paletka2& paletka2, kulka& kulka)
 		kulka.movedown();
 	}
 }
-
+void wynik(kulka& kulka)
+{
+	if (kulka.getPosition().x < 20) 
+	{
+		kulka.getPosition() = { 300, 400 };
+		score1++;
+	}
+	if (kulka.getPosition().x > 780)
+	{
+		kulka.getPosition() = { 300, 400 };
+		score2++;
+	}
+}
 
 int main()
 {
+
 	kulka kulka(400, 300);
 	paletka1 paletka1(40, 300);
 	paletka2 paletka2(760, 300);
 	RenderWindow window{ VideoMode{800,600},"Ping Pong" };
 	window.setFramerateLimit(60);
+	Text wynik1;
+	Text wynik2;
+	Font arial;
+	arial.loadFromFile("arial.ttf");
+	wynik1.setFont(arial);
+	wynik1.setCharacterSize(30);
+	wynik1.setFillColor(Color::White);
+	wynik1.setPosition(200, 0);
+	wynik2.setFont(arial);
+	wynik2.setCharacterSize(30);
+	wynik2.setFillColor(Color::White);
+	wynik2.setPosition(600, 0);
 	Event event;
 	Music music;
 
@@ -80,10 +108,15 @@ int main()
 		paletka2.update();
 		collisionTest(paletka1, kulka);
 		collisionTest(paletka2, kulka);
+		wynik(kulka);
 		window.draw(paletka1);
 		window.draw(paletka2);
 		window.draw(kulka);
+		window.draw(wynik1);
+		window.draw(wynik2);
 		window.display();
+		wynik1.setString(std::to_string(score1));
+		wynik2.setString(std::to_string(score2));
 	}
 	return 69;
 }
