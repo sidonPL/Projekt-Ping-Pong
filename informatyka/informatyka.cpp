@@ -49,16 +49,14 @@ bool collisionTest(paletka2& paletka2, kulka& kulka)
 		kulka.movedown();
 	}
 }
-void wynik(kulka& kulka)
+void wynik(kulka& kolo)
 {
-	if (kulka.getPosition().x < 20) 
+	if (kolo.getPosition().x < 20) 
 	{
-		kulka.getPosition() = { 300, 400 };
 		score1++;
 	}
-	if (kulka.getPosition().x > 780)
+	if (kolo.getPosition().x > 780)
 	{
-		kulka.getPosition() = { 300, 400 };
 		score2++;
 	}
 }
