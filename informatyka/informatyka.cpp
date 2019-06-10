@@ -5,9 +5,6 @@
 #include "paletka1.h"
 #include "paletka2.h"
 #include <SFML/Audio.hpp>
-#include <cmath>
-#include <ctime>
-#include <cstdlib>
 using namespace std;
 using namespace sf;
 
@@ -59,11 +56,13 @@ void wynik(kulka& kolo)
 	{
 		score2++;
 	}
+
 }
+
 
 void intro()
 {
-	RenderWindow window{ VideoMode{800,600},"Ping Pong" };
+	RenderWindow window{ VideoMode{800,600},"Ping Pong - Intro" };
 	window.setFramerateLimit(60);
 	Event event;
 	Music music;
@@ -83,6 +82,51 @@ void intro()
 	}
 
 	if (!music.openFromFile("intro.ogg"))
+	{
+		cout << "ERROR" << endl;
+	}
+	music.play();
+	while (true)
+	{
+		window.pollEvent(event);
+
+		if (event.type == Event::Closed)
+		{
+			window.close();
+			break;
+		}
+		window.clear();
+		window.draw(background);
+		window.display();
+		if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
+		{
+			window.close();
+			break;
+		}
+	}
+}
+void gracz1()
+{
+	RenderWindow window{ VideoMode{800,600},"Ping Pong - Wygral gracz 1" };
+	window.setFramerateLimit(60);
+	Event event;
+	Music music;
+
+	Texture BackgroundTexture;
+	Sprite background;
+
+	//background.setScale(0.2, 0.2); <--- how?
+
+	if (!BackgroundTexture.loadFromFile("gr1.png"))
+	{
+		return;
+	}
+	else
+	{
+		background.setTexture(BackgroundTexture);
+	}
+
+	if (!music.openFromFile("win.ogg"))
 	{
 		cout << "ERROR" << endl;
 	}
@@ -108,6 +152,54 @@ void intro()
 	}
 }
 
+void gracz2()
+{
+	RenderWindow window{ VideoMode{800,600},"Ping Pong - Wygral gracz 2" };
+	window.setFramerateLimit(60);
+	Event event;
+	Music music;
+
+	Texture BackgroundTexture;
+	Sprite background;
+
+	//background.setScale(0.2, 0.2); <--- how?
+
+	if (!BackgroundTexture.loadFromFile("gr2.png"))
+	{
+		return;
+	}
+	else
+	{
+		background.setTexture(BackgroundTexture);
+	}
+
+	if (!music.openFromFile("win.ogg"))
+	{
+		cout << "ERROR" << endl;
+	}
+
+	music.play();
+	while (true)
+	{
+		window.pollEvent(event);
+
+		if (event.type == Event::Closed)
+		{
+			window.close();
+			break;
+		}
+		window.clear();
+		window.draw(background);
+		window.display();
+		if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
+		{
+			window.close();
+			break;
+		}
+	}
+}
+
+
 void gra()
 {
 	kulka kulka(400, 300);
@@ -121,12 +213,14 @@ void gra()
 	arial.loadFromFile("arial.ttf");
 	wynik1.setFont(arial);
 	wynik1.setCharacterSize(30);
-	wynik1.setFillColor(Color::White);
+	wynik1.setFillColor(Color::Red);
+	wynik1.setOutlineColor(Color::White);
 	wynik1.setPosition(200, 0);
 	wynik2.setFont(arial);
 	wynik2.setCharacterSize(30);
-	wynik2.setFillColor(Color::White);
+	wynik2.setFillColor(Color::Blue);
 	wynik2.setPosition(600, 0);
+	wynik2.setOutlineColor(Color::White);
 	Event event;
 	Music music;
 
@@ -175,6 +269,16 @@ void gra()
 		window.display();
 		wynik1.setString(std::to_string(score1));
 		wynik2.setString(std::to_string(score2));
+			if (score1 == 100)
+			{
+				window.close();
+				break;
+			}
+			if (score2 == 100)
+			{
+				window.close();
+				break;
+			}
 	}
 }
 
@@ -182,5 +286,13 @@ int main()
 {
 	intro();
 	gra();
-
+	if (score1 == 100)
+	{
+		gracz2();
+	}
+	if (score2 == 100)
+	{
+		gracz1();
+	}
+	return 69;
 }
