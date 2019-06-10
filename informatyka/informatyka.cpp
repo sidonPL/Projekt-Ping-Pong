@@ -61,9 +61,55 @@ void wynik(kulka& kolo)
 	}
 }
 
-int main()
+void intro()
 {
+	RenderWindow window{ VideoMode{800,600},"Ping Pong" };
+	window.setFramerateLimit(60);
+	Event event;
+	Music music;
 
+	Texture BackgroundTexture;
+	Sprite background;
+
+	//background.setScale(0.2, 0.2); <--- how?
+
+	if (!BackgroundTexture.loadFromFile("intro.png"))
+	{
+		return;
+	}
+	else
+	{
+		background.setTexture(BackgroundTexture);
+	}
+
+	if (!music.openFromFile("intro.ogg"))
+	{
+		cout << "ERROR" << endl;
+	}
+
+	music.play();
+	while (true)
+	{
+		window.pollEvent(event);
+
+		if (event.type == Event::Closed)
+		{
+			window.close();
+			break;
+		}
+		window.clear();
+		window.draw(background);
+		window.display();
+		if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
+		{
+			window.close();
+			break;
+		}
+	}
+}
+
+void gra()
+{
 	kulka kulka(400, 300);
 	paletka1 paletka1(40, 300);
 	paletka2 paletka2(760, 300);
@@ -84,6 +130,20 @@ int main()
 	Event event;
 	Music music;
 
+	Texture BackgroundTexture;
+	Sprite background;
+
+	//background.setScale(0.2, 0.2); <--- how?
+
+	if (!BackgroundTexture.loadFromFile("tlo.jpg"))
+	{
+		return;
+	}
+	else
+	{
+		background.setTexture(BackgroundTexture);
+	}
+
 	if (!music.openFromFile("music.ogg"))
 	{
 		cout << "ERROR" << endl;
@@ -92,7 +152,6 @@ int main()
 	music.play();
 	while (true)
 	{
-		window.clear(Color::Black);
 		window.pollEvent(event);
 
 		if (event.type == Event::Closed)
@@ -100,7 +159,8 @@ int main()
 			window.close();
 			break;
 		}
-		
+		window.clear();
+		window.draw(background);
 		kulka.update();
 		paletka1.update();
 		paletka2.update();
@@ -116,5 +176,11 @@ int main()
 		wynik1.setString(std::to_string(score1));
 		wynik2.setString(std::to_string(score2));
 	}
-	return 69;
+}
+
+int main()
+{
+	intro();
+	gra();
+
 }
